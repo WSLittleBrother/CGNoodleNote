@@ -41,4 +41,7 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-android:4.48'
 
     //测试一下上传
+    compile 'io.reactivex:rxandroid:1.1.0'
+//    compile 'io.reactivex.rxjava2:rxjava:2.0.0'
+//    compile 'io.reactivex.rxjava2:rxandroid:2.0.0'
 }

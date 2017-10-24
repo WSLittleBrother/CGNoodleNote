@@ -22,6 +22,22 @@ public class User  implements Serializable{
     @DatabaseField
     private String password;
 
+    @DatabaseField
+    private int userId;
+    @DatabaseField
+    private String phoneNo;
+    @DatabaseField
+    private String info;
+    @DatabaseField
+    private String email;
+    @DatabaseField
+    private String nickname;
+    @DatabaseField
+    private String realname;
+
+
+
+
     public int getId() {
         return id;
     }
@@ -45,4 +61,54 @@ public class User  implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+
 }
