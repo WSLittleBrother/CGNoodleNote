@@ -40,4 +40,5 @@ dependencies {
     //轻量级的本地数据库
     compile 'com.j256.ormlite:ormlite-android:4.48'
 
+    //测试一下上传
 }
