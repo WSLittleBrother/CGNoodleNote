@@ -36,9 +36,10 @@ public abstract class BaseActivity <T extends BasePresenter> extends AppCompatAc
     //上下文
     protected Context mContext;
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         doBeforeSetcontentView();
         this.setContentView(getLayoutId());
         //添加注解
