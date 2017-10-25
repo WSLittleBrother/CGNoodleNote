@@ -16,7 +16,8 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import sochat.so.com.android.R;
+import com.example.a99351.cgnoodlenote.R;
+
 
 /**
  * 圆形图片
