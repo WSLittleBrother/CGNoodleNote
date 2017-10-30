@@ -30,6 +30,6 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="明天要发财" />
+        android:text="路漫漫其修远兮，吾将上下而求索" />
 
 </LinearLayout>
