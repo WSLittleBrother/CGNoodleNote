@@ -31,7 +31,7 @@ public class PersonInfoActivity extends BaseActivity {
     @Override
     protected void initToolBar() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("羊蝎子面馆");
+        getSupportActionBar().setTitle("带你去旅行");
     }
 
     @Override
