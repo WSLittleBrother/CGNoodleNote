@@ -22,6 +22,7 @@ import com.example.a99351.cgnoodlenote.ui.day.DayFragment;
 import com.example.a99351.cgnoodlenote.ui.month.MonthFragment;
 import com.example.a99351.cgnoodlenote.ui.personinfo.PersonInfoActivity;
 import com.example.a99351.cgnoodlenote.ui.week.WeekFragment;
+import com.example.a99351.cgnoodlenote.utils.PhotoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,8 +98,9 @@ public class MainActivity extends BaseActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+            PhotoUtils.takePhoto(MainActivity.this,AppConstant.OPEN_PHOTO);
         } else if (id == R.id.nav_gallery) {
-
+            PhotoUtils.openPhotoAlbum(MainActivity.this,AppConstant.OPEN_PHOTO_ALBUM);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -124,7 +126,7 @@ public class MainActivity extends BaseActivity
     protected void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("羊蝎子面馆");
+        getSupportActionBar().setTitle("费用记录");
 //        getSupportActionBar().setSubtitle("每一天都是新的");
     }
 

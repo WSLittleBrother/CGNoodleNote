@@ -74,4 +74,18 @@
         </item>
     </style>
 
+
+
+    <style name="item_person_info_title_style">
+        <item name="android:gravity">bottom</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/item_common_height</item>
+        <item name="android:background">@color/common_divider_narrow</item>
+        <item name="android:textSize">@dimen/font_normal2</item>
+        <item name="android:paddingBottom">@dimen/dp_5</item>
+        <item name="android:paddingLeft">@dimen/dp_20</item>
+        <item name="android:textColor">@color/common_h3</item>
+
+    </style>
+
 </resources>

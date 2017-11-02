@@ -9,6 +9,7 @@ public class UserModel {
     static User user;
 
     public static User getUser() {
+        if (user == null) return new User();
         return user;
     }
 

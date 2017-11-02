@@ -13,6 +13,7 @@
 
 
     <dimen name="divider_size">0.5dp</dimen>
+    <dimen name="dp_1">1dp</dimen>
     <dimen name="dp_2">2dp</dimen>
     <dimen name="dp_5">5dp</dimen>
     <dimen name="dp_8">8dp</dimen>
@@ -41,4 +42,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_80">80dp</dimen>
+
+    <!--item的高度-->
+    <dimen name="item_common_height">45dp</dimen>
 </resources>

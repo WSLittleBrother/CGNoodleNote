@@ -6,4 +6,9 @@
 
     <string name="action_settings">设置</string>
     <string name="action_models">模式</string>
+    
+    
+    <string name="manlable">♂  </string>
+    <string name="womanlable">♀  </string>
+    <string name="text_my_info">我的信息</string>
 </resources>

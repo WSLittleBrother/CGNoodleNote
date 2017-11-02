@@ -10,7 +10,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/dp_10"
         >
         <TextView
             android:layout_width="match_parent"
@@ -20,8 +19,48 @@
             android:paddingTop="@dimen/dp_20"
             android:textSize="@dimen/font_normal4"
             android:paddingBottom="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_20"
             />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_20"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_5"
+                android:background="@drawable/shape_corner_light_bule"
+                android:text="♂  25"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_small"
+                />
+            <TextView
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_5"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_small"
+                android:background="@drawable/shape_corner_deep_purple"
+                android:text="水瓶座"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/common_divider_narrow"
+            />
+
+        <TextView
+            android:text="@string/text_my_info"
+            style="@style/item_person_info_title_style"
+            />
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
