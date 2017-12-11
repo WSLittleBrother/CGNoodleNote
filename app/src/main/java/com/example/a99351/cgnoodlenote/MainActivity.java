@@ -4,27 +4,35 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import com.example.a99351.cgnoodlenote.base.ActivityManager;
 import com.example.a99351.cgnoodlenote.base.BaseActivity;
-import com.example.a99351.cgnoodlenote.ui.day.DayFragment;
-import com.example.a99351.cgnoodlenote.ui.month.MonthFragment;
+import com.example.a99351.cgnoodlenote.localdata.DBHelper;
+import com.example.a99351.cgnoodlenote.localdata.DBHelperType;
+import com.example.a99351.cgnoodlenote.localdata.busdb.Product;
+import com.example.a99351.cgnoodlenote.ui.addvariety.AddVarietyActivity;
+import com.example.a99351.cgnoodlenote.ui.home.view.BalanceFragment;
+import com.example.a99351.cgnoodlenote.ui.home.view.ChargeFragment;
+import com.example.a99351.cgnoodlenote.ui.home.view.OrderFragment;
 import com.example.a99351.cgnoodlenote.ui.personinfo.PersonInfoActivity;
-import com.example.a99351.cgnoodlenote.ui.week.WeekFragment;
 import com.example.a99351.cgnoodlenote.utils.PhotoUtils;
+import com.example.a99351.cgnoodlenote.utils.ToastUtil;
+import com.j256.ormlite.dao.Dao;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 
 import butterknife.Bind;
@@ -32,30 +40,53 @@ import butterknife.Bind;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.viewpager)
-    ViewPager viewpager;
-    @Bind(R.id.tablayout)
-    TabLayout tablayout;
-    private String[]mTitles = {"日","周","月"};
+    @Bind(R.id.rb_charge)
+    RadioButton rbCharge;
+    @Bind(R.id.rb_order)
+    RadioButton rbOrder;
+    @Bind(R.id.rb_balance)
+    RadioButton rbBalance;
+    @Bind(R.id.rg_home)
+    RadioGroup rgHome;
+    @Bind(R.id.fl_body)
+    FrameLayout flBody;
     //Toolbar
     private Toolbar toolbar;
+
+    private ChargeFragment chargeFragment;
+    private OrderFragment orderFragment;
+    private BalanceFragment balanceFragment;
+
     //当前的Fragment
     private int currentFragmentPosition;
-    //Fragment的数组
-    private List<Fragment> fragmentList;
-    //Fragment声明
-    private DayFragment dayFragment;
-    private WeekFragment weekFragment;
-    private MonthFragment monthFragment;
 
-
-    private FragmentPagerAdapter adapter ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //初始化frament
-        initFragment();
+        initFragment(savedInstanceState);
+        initListeners();
+    }
 
+    private void initListeners() {
+        rgHome.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rb_charge:
+                        switchFragment(0);
+                        break;
+
+                    case R.id.rb_order:
+                        switchFragment(1);
+                        break;
+
+                    case R.id.rb_balance:
+                        switchFragment(2);
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -98,16 +129,16 @@ public class MainActivity extends BaseActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-            PhotoUtils.takePhoto(MainActivity.this,AppConstant.OPEN_PHOTO);
+            PhotoUtils.takePhoto(MainActivity.this, AppConstant.OPEN_PHOTO);
         } else if (id == R.id.nav_gallery) {
-            PhotoUtils.openPhotoAlbum(MainActivity.this,AppConstant.OPEN_PHOTO_ALBUM);
+            PhotoUtils.openPhotoAlbum(MainActivity.this, AppConstant.OPEN_PHOTO_ALBUM);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_variety) {
+                startActivity(AddVarietyActivity.class);
+        } else if (id == R.id.nav_eye) {
 
         }
 
@@ -125,9 +156,9 @@ public class MainActivity extends BaseActivity
     @Override
     protected void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("每天都是新的");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("费用记录");
-//        getSupportActionBar().setSubtitle("每一天都是新的");
+//        toolbar.setSubtitle("每一天都是新的");
     }
 
     @Override
@@ -136,8 +167,12 @@ public class MainActivity extends BaseActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "明天的生意很好", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "是否添加产品?", Snackbar.LENGTH_LONG)
+                        .setAction("确定", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
+                        }).show();
             }
         });
 
@@ -160,80 +195,75 @@ public class MainActivity extends BaseActivity
                 MainActivity.this.startActivity(PersonInfoActivity.class);
             }
         });
-
-        fragmentList = new ArrayList<>();
-        //初始化TabLayout
-        for (String title:mTitles){
-            tablayout.addTab(tablayout.newTab().setText(title));
-        }
-
-        fragmentList.add(DayFragment.getInstance());
-        fragmentList.add(WeekFragment.getInstance());
-        fragmentList.add(MonthFragment.getInstance());
-
-        tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-               switchFragment(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return fragmentList.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                return fragmentList.size();
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return mTitles[position];
-            }
-        };
-
-        //ViewPager的adapter
-        viewpager.setAdapter(adapter);
-        tablayout.setupWithViewPager(viewpager);
-
     }
-
 
     //初始化Fragment
-    private void initFragment() {
-        currentFragmentPosition = 0;
+    private void initFragment(Bundle savedInstanceState) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        int currentFragmentPosition = 0;
+        if (savedInstanceState != null) {
+            chargeFragment = (ChargeFragment) getSupportFragmentManager().findFragmentByTag("chargeFragment");
+            orderFragment = (OrderFragment) getSupportFragmentManager().findFragmentByTag("orderFragment");
+            balanceFragment = (BalanceFragment) getSupportFragmentManager().findFragmentByTag("balanceFragment");
+            currentFragmentPosition = savedInstanceState.getInt("HOME_CURRENT_TAB_POSITION");
+        } else {
+            chargeFragment = new ChargeFragment();
+            orderFragment = new OrderFragment();
+            balanceFragment = new BalanceFragment();
+            transaction.add(R.id.fl_body,chargeFragment,"chargeFragment" );
+            transaction.add(R.id.fl_body,orderFragment,"orderFragment" );
+            transaction.add(R.id.fl_body,balanceFragment,"balanceFragment" );
+        }
+        transaction.commit();
+        switchFragment(currentFragmentPosition);
 
     }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
-    //Fragment的转换方法
+    /**
+     * 切换
+     */
     private void switchFragment(int position) {
-        viewpager.setCurrentItem(position);
-//        switch (position) {
-//            case 0:
-//                viewpager.setCurrentItem(0);
-//                break;
-//            case 1:
-//                viewpager.setCurrentItem(1);
-//                break;
-//            case 2:
-//                viewpager.setCurrentItem(2);
-//                break;
-//        }
-
+        currentFragmentPosition =position;
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        switch (position) {
+            case 0:
+                transaction.hide(orderFragment);
+                transaction.hide(balanceFragment);
+                transaction.show(chargeFragment);
+                transaction.commitAllowingStateLoss();
+                break;
+            case 1:
+                transaction.hide(chargeFragment);
+                transaction.hide(balanceFragment);
+                transaction.show(orderFragment);
+                transaction.commitAllowingStateLoss();
+                break;
+            case 2:
+                transaction.hide(orderFragment);
+                transaction.hide(chargeFragment);
+                transaction.show(balanceFragment);
+                transaction.commitAllowingStateLoss();
+                break;
+            default:
+                break;
+        }
     }
 
-
+    /**
+     * 双击返回键退出应用
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                ActivityManager.getActivityMar().exitApp(MainActivity.this);
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

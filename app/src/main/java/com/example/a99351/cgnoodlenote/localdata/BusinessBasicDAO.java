@@ -4,8 +4,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.a99351.cgnoodlenote.AppConstant;
+import com.example.a99351.cgnoodlenote.localdata.busdb.Comment;
+import com.example.a99351.cgnoodlenote.localdata.busdb.Product;
+import com.example.a99351.cgnoodlenote.localdata.sysdb.SysConfig;
+import com.example.a99351.cgnoodlenote.localdata.sysdb.User;
 import com.example.a99351.cgnoodlenote.log.L;
-import com.example.a99351.cgnoodlenote.model.User;
 import com.example.a99351.cgnoodlenote.model.UserModel;
 import com.example.a99351.cgnoodlenote.utils.SDCardUtils;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
@@ -20,11 +23,11 @@ public class BusinessBasicDAO extends OrmLiteSqliteOpenHelper {
 	public static String BUSDATABASE_NAME = "project.db";
 	private String DATABASE_PATH = AppConstant.APP_SDCARD_PATH + UserModel.getUser().getUsername() + "/" + BUSDATABASE_NAME;
 
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 3;
 
 	private void initDtaBasePath(Context context) {
 		if (!SDCardUtils.isSDCardEnable()) {
-			DATABASE_PATH = context.getFilesDir().getAbsolutePath() + "/" + BUSDATABASE_NAME;
+			DATABASE_PATH = context.getFilesDir().getAbsolutePath() + BUSDATABASE_NAME;
 		}
 	}
 
@@ -61,7 +64,8 @@ public class BusinessBasicDAO extends OrmLiteSqliteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase arg0, ConnectionSource connSource) {
 		try {
-			TableUtils.createTable(connSource, User.class);
+			TableUtils.createTable(connSource, Comment.class);
+			TableUtils.createTable(connSource, Product.class);
 
 			arg0.setVersion(DATABASE_VERSION);
 		} catch (SQLException e) {
@@ -71,7 +75,19 @@ public class BusinessBasicDAO extends OrmLiteSqliteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, ConnectionSource connSource, int oldVersion, int newVersion) {
-
-
+		if (oldVersion != newVersion) {
+			try {
+				if (oldVersion <2){
+					String sql = "ALTER TABLE Product ADD COLUMN remake text";
+					db.execSQL(sql);
+				}
+				if (oldVersion < 3) {
+					String sql1 = "ALTER TABLE Product ADD COLUMN imgurl text";
+					db.execSQL(sql1);
+				}
+				db.setVersion(newVersion);
+			}catch (Exception e){
+			e.printStackTrace();}
+		}
 	}
 }

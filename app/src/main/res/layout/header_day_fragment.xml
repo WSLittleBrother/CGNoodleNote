@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:text="今日支出"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        >
+        <TextView
+            android:id="@+id/tv_day_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1000"
+            android:textSize="@dimen/font_big1"
+            android:textColor="@color/colorAccent"
+            android:layout_centerHorizontal="true"
+            />
+        <TextView
+            android:layout_toRightOf="@+id/tv_day_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="元"
+            android:layout_alignBaseline="@+id/tv_day_income"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:id="@+id/tv_watch_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查看详情"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_alignBaseline="@+id/tv_day_income"
+            android:textColor="@drawable/selector_press_text1"
+            />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="详情列表"
+            style="@style/item_person_info_title_style"
+            />
+
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Add"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/dp_8"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:textColor="@drawable/selector_press_text1"
+            />
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

@@ -2,6 +2,8 @@ package com.example.a99351.cgnoodlenote.model;
 
 //import com.sunwayworld.monit.common.dao.staticdb.User;
 
+import com.example.a99351.cgnoodlenote.localdata.sysdb.User;
+
 /**
  * Created by Think on 2016/4/22.
  */

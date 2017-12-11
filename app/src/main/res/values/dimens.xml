@@ -29,6 +29,7 @@
     <dimen name="dp_40">40dp</dimen>
     <dimen name="dp_45">45dp</dimen>
     <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_75">75dp</dimen>
 
 
     <!-- font -->
@@ -39,6 +40,7 @@
     <dimen name="font_normal3">18sp</dimen>
     <dimen name="font_normal4">20sp</dimen>
     <dimen name="font_large">24sp</dimen>
+    <dimen name="font_big1">54sp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_80">80dp</dimen>

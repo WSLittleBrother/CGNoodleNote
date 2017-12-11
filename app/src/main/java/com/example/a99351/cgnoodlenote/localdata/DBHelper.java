@@ -2,10 +2,12 @@ package com.example.a99351.cgnoodlenote.localdata;
 
 import android.content.Context;
 import android.database.SQLException;
-import android.util.Log;
 
+import com.example.a99351.cgnoodlenote.localdata.busdb.Comment;
+import com.example.a99351.cgnoodlenote.localdata.busdb.Product;
+import com.example.a99351.cgnoodlenote.localdata.sysdb.SysConfig;
+import com.example.a99351.cgnoodlenote.localdata.sysdb.User;
 import com.example.a99351.cgnoodlenote.log.L;
-import com.example.a99351.cgnoodlenote.model.User;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -20,6 +22,14 @@ public class DBHelper {
      * 系统静态库
      */
     private Dao<User, Integer> userDAO = null;
+    private Dao<SysConfig, Integer> sysConfigDAO = null;
+
+
+    /**
+     * 用户业务表
+     */
+    private Dao<Comment, Integer> commentDAO = null;
+    private Dao<Product, Integer> productDAO = null;
 
     OrmLiteSqliteOpenHelper dbhelper = null;
     DBHelperType dbhelpertype;
@@ -65,7 +75,23 @@ public class DBHelper {
         super.finalize();
     }
 
-    public Dao<User, Integer> getLoginLogDAO() {
+    /**
+     * 静态表——————————————————start——————————————————————
+     * @return
+     */
+    public Dao<SysConfig, Integer> getSysConfigDAO() {
+        try {
+            sysConfigDAO = dbhelper.getDao(SysConfig.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+        return sysConfigDAO;
+    }
+
+
+    public Dao<User, Integer> getUserDAO() {
         try {
             userDAO = dbhelper.getDao(User.class);
         } catch (SQLException e) {
@@ -75,4 +101,44 @@ public class DBHelper {
         }
         return userDAO;
     }
+
+    /**
+     * 静态表——————————————————end——————————————————————
+     * @return
+     */
+
+    //********************************************* 分割线 *******************************************
+
+    /**
+     * 业务表——————————————————start——————————————————————
+     * @return
+     */
+    public Dao<Comment, Integer> getCommentDao() {
+        try {
+            commentDAO = dbhelper.getDao(Comment.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+        return commentDAO;
+    }
+
+    public Dao<Product, Integer> getProductDao() {
+        try {
+            productDAO = dbhelper.getDao(Product.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+        return productDAO;
+    }
+
+
+    /**
+     * 业务表——————————————————end——————————————————————
+     * @return
+     */
+
 }

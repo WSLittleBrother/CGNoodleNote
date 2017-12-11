@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorAccent"
+    >
+
+    <include
+        android:id="@+id/layout"
+        layout="@layout/toolbar"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="#88FF4081"
+        />
+    <LinearLayout
+        android:id="@+id/llayout_img"
+        style="@style/item_lllayout_style"
+        >
+        <TextView
+            android:text="图      像"
+            android:layout_weight="1"
+            style="@style/textview_text_white_style1"
+            />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_img"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"
+            app:border_color="@android:color/white"
+            app:border_width="2dp"
+            android:layout_gravity="center_vertical"
+            />
+        <ImageView
+            style="@style/open_white_style"
+            />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:background="@color/common_divider_narrow"
+        />
+    <LinearLayout
+        style="@style/item_lllayout_style"
+        >
+        <TextView
+            android:text="名      字"
+            style="@style/textview_text_white_style1"
+            />
+        <EditText
+            android:id="@+id/et_name"
+            android:hint="请输入产品名字"
+            style="@style/edittext_text_white_style"
+            />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:background="@color/common_divider_narrow"
+        />
+    <LinearLayout
+        style="@style/item_lllayout_style"
+        >
+        <TextView
+            android:text="参 考 价"
+            style="@style/textview_text_white_style1"
+            />
+        <EditText
+            android:inputType="number"
+            android:id="@+id/et_price"
+            android:hint="请输入产品价格"
+            style="@style/edittext_text_white_style"
+            />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:background="@color/common_divider_narrow"
+        />
+    <LinearLayout
+        style="@style/item_lllayout_style"
+        >
+        <TextView
+            android:text="备      注"
+            style="@style/textview_text_white_style1"
+            />
+        <EditText
+            android:id="@+id/et_remake"
+            android:hint="请输入备注信息"
+            style="@style/edittext_text_white_style"
+            />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_common_height"
+        android:background="@color/common_divider_narrow"
+        >
+
+        <TextView
+            android:text="@string/had_add_product"
+            style="@style/item_person_info_title_style"
+            />
+
+        <TextView
+            android:id="@+id/tv_product_count"
+            android:text="数量  0"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_20"
+            android:padding="@dimen/dp_2"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:textColor="@color/colorAccent"
+            />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

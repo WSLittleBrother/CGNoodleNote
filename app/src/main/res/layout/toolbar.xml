@@ -5,6 +5,15 @@
     android:layout_centerVertical="true"
     android:gravity="center_vertical"
     android:layout_height="40dp">
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/back_white"
+        android:padding="@dimen/dp_10"
+        android:visibility="visible"/>
     <TextView
         android:id="@+id/toolbar_leftbutton"
         android:layout_width="wrap_content"
@@ -34,10 +43,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_5"
-        android:textColor="@color/white"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:textColor="@drawable/selector_press_text1"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:visibility="visible" />
+        android:visibility="visible"
+        />
 
 
 </RelativeLayout>

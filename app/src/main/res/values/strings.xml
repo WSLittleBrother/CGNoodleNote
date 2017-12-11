@@ -6,9 +6,23 @@
 
     <string name="action_settings">设置</string>
     <string name="action_models">模式</string>
-    
-    
+
+    <string name="all_number_and_letter">1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM</string>
+
     <string name="manlable">♂  </string>
     <string name="womanlable">♀  </string>
     <string name="text_my_info">我的信息</string>
+    <string name="input_username">请输入用户名</string>
+    <string name="input_password">请输入密码</string>
+    <string name="input_activation_code">请输入激活码</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="positive">确定</string>
+    <string name="cancel">取消</string>
+    <string name="day_order">产品清单</string>
+    <string name="had_add_product">已添加产品</string>
+
+    <string name="error_network">网络访问错误，请稍后再试</string>
+    <string name="no_net">网络不可用,请检查你的网络</string>
+    <string name="loading">请稍后...</string>
 </resources>

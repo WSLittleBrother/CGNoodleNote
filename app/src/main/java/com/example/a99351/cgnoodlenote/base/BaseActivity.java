@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -23,6 +22,7 @@ import android.widget.EditText;
 import com.example.a99351.cgnoodlenote.R;
 import com.example.a99351.cgnoodlenote.utils.TUtil;
 import com.example.a99351.cgnoodlenote.utils.ToastUtil;
+import com.example.a99351.cgnoodlenote.widget.StatusBarCompat;
 
 import butterknife.ButterKnife;
 
@@ -44,6 +44,8 @@ public abstract class BaseActivity <T extends BasePresenter> extends AppCompatAc
         this.setContentView(getLayoutId());
         //添加注解
         ButterKnife.bind(this);
+
+        StatusBarCompat.compat(this);
 
         mContext=this;
         /*

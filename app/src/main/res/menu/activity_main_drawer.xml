@@ -13,7 +13,7 @@
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="视频" />
+            android:title="进货电话" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
@@ -23,13 +23,13 @@
     <item android:title="通讯">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="分享" />
+                android:id="@+id/nav_variety"
+                android:icon="@drawable/ic_variety"
+                android:title="增加种类" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="发送" />
+                android:id="@+id/nav_eye"
+                android:icon="@drawable/ic_eye"
+                android:title="查看商品" />
         </menu>
     </item>
 
