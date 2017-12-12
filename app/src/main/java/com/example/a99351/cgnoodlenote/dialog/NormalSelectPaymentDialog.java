@@ -23,7 +23,6 @@ public class NormalSelectPaymentDialog {
     private View dialogView;
     private TextView title;
     private TextView bt_sure;
-    private LinearLayout linearLayout;
     private NormalSelectionDialog.Builder mBuilder;
     private List<String> datas;
 
@@ -42,10 +41,7 @@ public class NormalSelectPaymentDialog {
         lp.gravity= Gravity.BOTTOM;
         window.setAttributes(lp);
 
-//        title= (TextView) dialogView.findViewById(R.id.action_dialog_title);
-//        linearLayout = (LinearLayout) dialogView.findViewById(R.id.action_dialog_linearlayout);
         bt_sure = (TextView) dialogView.findViewById(R.id.tv_positive);
-        bt_sure.setText(mBuilder.getCancleButtonText());
         bt_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,50 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:paddingTop="30dp"
-    android:layout_height="500dp"
-    android:background="@color/red">
+    android:layout_height="wrap_content"
+    android:background="@color/transparent">
 
     <RelativeLayout
         android:id="@+id/re"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/yellow"
+        android:layout_height="@dimen/dp_60"
+        android:background="@color/transparent"
         >
-        <RelativeLayout
-            android:background="@color/blue"
-            android:layout_alignParentBottom="true"
+
+        <View
             android:layout_width="match_parent"
-            android:layout_marginTop="-30dp"
-            android:layout_height="120dp">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_img1"
-                android:layout_width="@dimen/dp_60"
-                android:layout_height="@dimen/dp_60"
-                android:layout_gravity="center_horizontal"
-                android:src="@mipmap/ic_launcher_dog"
-
-                />
-        </RelativeLayout>
-
-
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_below="@+id/re"
-        android:id="@+id/pop_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="-30dp"
-        >
+            android:layout_height="@dimen/dp_30"
+            android:background="@drawable/shape_white_corner_top_8"
+            android:layout_alignParentBottom="true"
+            />
         <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_centerHorizontal="true"
             android:id="@+id/iv_img"
             android:layout_width="@dimen/dp_60"
             android:layout_height="@dimen/dp_60"
             android:layout_gravity="center_horizontal"
             android:src="@mipmap/ic_launcher_dog"
             />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        >
 
         <TextView
             android:id="@+id/tv_name"
@@ -55,19 +47,102 @@
             android:textColor="@color/common_h"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <EditText
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_common_height"
+            android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/et_name"
-            android:hint="请输入价格"
-            style="@style/edittext_text_white_style"
-            />
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="价  格："
+                android:textColor="@color/common_h"
+                android:gravity="center"
+                />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_5"
+                android:inputType="number"
+                android:background="@drawable/shape_stroke_black"
+                android:hint="请输入价格"
+                android:textSize="@dimen/font_small"
+                android:minEms="7"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="  数  量："
+                android:textColor="@color/common_h"
+                android:gravity="center"
+                />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_5"
+                android:inputType="number"
+                android:background="@drawable/shape_stroke_black"
+                android:textSize="@dimen/font_small"
+                android:hint="请输入数量"
+                android:minEms="7"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_common_height"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="单  位："
+                android:textColor="@color/common_h"
+                android:gravity="center"
+                />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_5"
+                android:background="@drawable/shape_stroke_black"
+                android:textSize="@dimen/font_small"
+                android:hint="例如：斤、箱"
+                android:minEms="7"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="  备  注："
+                android:textColor="@color/common_h"
+                android:gravity="center"
+                />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_5"
+                android:background="@drawable/shape_stroke_black"
+                android:textSize="@dimen/font_small"
+                android:hint="请输入备注"
+                android:minEms="7"
+                android:id="@+id/editText" />
+        </LinearLayout>
         <TextView
             android:id="@+id/tv_positive"
             android:text="@string/positive"
             android:layout_gravity="right"
             android:background="@color/transparent"
             style="@style/bubble_chart_button_style"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
