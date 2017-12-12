@@ -13,6 +13,14 @@ public class DateTimeUtils {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
     }
 
+    /**
+     * 获得当前时间的年月天
+     * @return
+     */
+    public static String getCurrentDateTimeYMD() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+    }
+
     public static String getCurrentDateTime(String timeStyle) {
         return new SimpleDateFormat(timeStyle).format(Calendar.getInstance().getTime());
     }

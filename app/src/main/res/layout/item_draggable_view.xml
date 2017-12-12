@@ -2,16 +2,17 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="@dimen/dp_80"
     android:background="@android:color/white"
     android:orientation="horizontal"
     android:layout_marginBottom="1dp"
     >
 
-    <ImageView
-        android:id="@+id/iv_head"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_photo"
+        android:scaleType="centerCrop"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:src="@mipmap/ic_launcher"
@@ -26,7 +27,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv"
+            android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -36,7 +37,7 @@
             android:textColor="@android:color/black"
             />
         <TextView
-            android:id="@+id/email"
+            android:id="@+id/tv_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -47,7 +48,8 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/iv"
+        android:visibility="gone"
+        android:id="@+id/iv_img"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:scaleType="center"

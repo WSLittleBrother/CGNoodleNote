@@ -20,20 +20,12 @@ import android.widget.RadioGroup;
 
 import com.example.a99351.cgnoodlenote.base.ActivityManager;
 import com.example.a99351.cgnoodlenote.base.BaseActivity;
-import com.example.a99351.cgnoodlenote.localdata.DBHelper;
-import com.example.a99351.cgnoodlenote.localdata.DBHelperType;
-import com.example.a99351.cgnoodlenote.localdata.busdb.Product;
 import com.example.a99351.cgnoodlenote.ui.addvariety.AddVarietyActivity;
 import com.example.a99351.cgnoodlenote.ui.home.view.BalanceFragment;
 import com.example.a99351.cgnoodlenote.ui.home.view.ChargeFragment;
 import com.example.a99351.cgnoodlenote.ui.home.view.OrderFragment;
 import com.example.a99351.cgnoodlenote.ui.personinfo.PersonInfoActivity;
-import com.example.a99351.cgnoodlenote.utils.PhotoUtils;
-import com.example.a99351.cgnoodlenote.utils.ToastUtil;
-import com.j256.ormlite.dao.Dao;
-
-import java.sql.SQLException;
-import java.util.List;
+import com.example.a99351.cgnoodlenote.utils.PhotoUtilsPPP;
 
 import butterknife.Bind;
 
@@ -129,9 +121,9 @@ public class MainActivity extends BaseActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-            PhotoUtils.takePhoto(MainActivity.this, AppConstant.OPEN_PHOTO);
+            PhotoUtilsPPP.takePhoto(MainActivity.this, AppConstant.OPEN_PHOTO);
         } else if (id == R.id.nav_gallery) {
-            PhotoUtils.openPhotoAlbum(MainActivity.this, AppConstant.OPEN_PHOTO_ALBUM);
+            PhotoUtilsPPP.openPhotoAlbum(MainActivity.this, AppConstant.OPEN_PHOTO_ALBUM);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

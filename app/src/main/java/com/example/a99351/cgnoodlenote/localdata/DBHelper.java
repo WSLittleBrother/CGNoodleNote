@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.SQLException;
 
 import com.example.a99351.cgnoodlenote.localdata.busdb.Comment;
+import com.example.a99351.cgnoodlenote.localdata.busdb.DayCharge;
 import com.example.a99351.cgnoodlenote.localdata.busdb.Product;
 import com.example.a99351.cgnoodlenote.localdata.sysdb.SysConfig;
 import com.example.a99351.cgnoodlenote.localdata.sysdb.User;
@@ -30,6 +31,7 @@ public class DBHelper {
      */
     private Dao<Comment, Integer> commentDAO = null;
     private Dao<Product, Integer> productDAO = null;
+    private Dao<DayCharge, Integer> dayChargesDao = null;
 
     OrmLiteSqliteOpenHelper dbhelper = null;
     DBHelperType dbhelpertype;
@@ -133,6 +135,16 @@ public class DBHelper {
             e.printStackTrace();
         }
         return productDAO;
+    }
+    public Dao<DayCharge, Integer> getDayChargeDao() {
+        try {
+            dayChargesDao = dbhelper.getDao(DayCharge.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+        return dayChargesDao;
     }
 
 

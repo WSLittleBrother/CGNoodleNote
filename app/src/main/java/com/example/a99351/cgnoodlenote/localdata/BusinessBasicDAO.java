@@ -5,9 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.a99351.cgnoodlenote.AppConstant;
 import com.example.a99351.cgnoodlenote.localdata.busdb.Comment;
+import com.example.a99351.cgnoodlenote.localdata.busdb.DayCharge;
 import com.example.a99351.cgnoodlenote.localdata.busdb.Product;
-import com.example.a99351.cgnoodlenote.localdata.sysdb.SysConfig;
-import com.example.a99351.cgnoodlenote.localdata.sysdb.User;
 import com.example.a99351.cgnoodlenote.log.L;
 import com.example.a99351.cgnoodlenote.model.UserModel;
 import com.example.a99351.cgnoodlenote.utils.SDCardUtils;
@@ -23,7 +22,7 @@ public class BusinessBasicDAO extends OrmLiteSqliteOpenHelper {
 	public static String BUSDATABASE_NAME = "project.db";
 	private String DATABASE_PATH = AppConstant.APP_SDCARD_PATH + UserModel.getUser().getUsername() + "/" + BUSDATABASE_NAME;
 
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 5;
 
 	private void initDtaBasePath(Context context) {
 		if (!SDCardUtils.isSDCardEnable()) {
@@ -66,6 +65,7 @@ public class BusinessBasicDAO extends OrmLiteSqliteOpenHelper {
 		try {
 			TableUtils.createTable(connSource, Comment.class);
 			TableUtils.createTable(connSource, Product.class);
+			TableUtils.createTable(connSource, DayCharge.class);
 
 			arg0.setVersion(DATABASE_VERSION);
 		} catch (SQLException e) {
@@ -83,6 +83,10 @@ public class BusinessBasicDAO extends OrmLiteSqliteOpenHelper {
 				}
 				if (oldVersion < 3) {
 					String sql1 = "ALTER TABLE Product ADD COLUMN imgurl text";
+					db.execSQL(sql1);
+				}
+				if (oldVersion < 4) {
+					String sql1 = "ALTER TABLE Product ADD COLUMN createday text";
 					db.execSQL(sql1);
 				}
 				db.setVersion(newVersion);

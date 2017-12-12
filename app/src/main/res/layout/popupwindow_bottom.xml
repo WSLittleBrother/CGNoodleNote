@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:paddingTop="30dp"
+    android:layout_height="500dp"
+    android:background="@color/red">
+
+    <RelativeLayout
+        android:id="@+id/re"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/yellow"
+        >
+        <RelativeLayout
+            android:background="@color/blue"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_marginTop="-30dp"
+            android:layout_height="120dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_img1"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/ic_launcher_dog"
+
+                />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_below="@+id/re"
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="-30dp"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_img"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/ic_launcher_dog"
+            />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:text="名字"
+            android:textSize="@dimen/font_large"
+            android:padding="@dimen/dp_5"
+            android:gravity="center"
+            android:textColor="@color/common_h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/et_name"
+            android:hint="请输入价格"
+            style="@style/edittext_text_white_style"
+            />
+        <TextView
+            android:id="@+id/tv_positive"
+            android:text="@string/positive"
+            android:layout_gravity="right"
+            android:background="@color/transparent"
+            style="@style/bubble_chart_button_style"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

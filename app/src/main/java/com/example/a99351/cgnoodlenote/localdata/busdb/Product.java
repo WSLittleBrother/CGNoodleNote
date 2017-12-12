@@ -21,11 +21,21 @@ public class Product {
     @DatabaseField
     private String unit;
     @DatabaseField
-    private String createdate;
+    private String createdate;//这里记录的是创建的时间的年月天 小时 分钟 秒
+    @DatabaseField
+    private String createday;//这里记录的是创建的时间的年月天，用于其他地方进行每一天的遍历
     @DatabaseField
     private String remake;//备注
     @DatabaseField
     private String imgurl;//产品图像地址
+
+    public String getCreateday() {
+        return createday;
+    }
+
+    public void setCreateday(String createday) {
+        this.createday = createday;
+    }
 
     public String getImgurl() {
         return imgurl;

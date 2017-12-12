@@ -79,7 +79,7 @@ public class LoginUtil {
             //用户个人的专用文件夹,用于存放附件
             String personUrl = AppConstant.APP_SDCARD_PATH + UserModel.getUser().getUsername() + "/";
             File destDir = new File(personUrl
-                    + "comment");
+                    + "comment/crop");
             if (!destDir.exists()) {
                 destDir.mkdirs();
             }

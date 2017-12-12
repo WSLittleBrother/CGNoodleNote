@@ -6,9 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -49,7 +53,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AddVarietyActivity extends BaseActivity {
+public class AddVarietyActivity extends BaseActivity implements AddVarietyDragAdapter.setImgClick {
     @Bind(R.id.toolbar_title)
     TextView toolbarTitle;
     @Bind(R.id.toolbar_rightbutton)
@@ -78,12 +82,20 @@ public class AddVarietyActivity extends BaseActivity {
      */
     public static final int OPEN_CAMERA = 101;
     public static final int OPEN_ALBUM = 102;
+    public static final int CODE_RESULT_REQUEST = 103;
+    public static final int ITEM_OPEN_CAMERA = 104;
+    public static final int ITEM_OPEN_ALBUM = 105;
+    public static final int ITEM_CODE_RESULT_REQUEST = 106;
     private Product addProduct;
 
-    /**
-     * 文件的url
-     */
-    private String fileUrl ="";
+    private File fileUri ;
+    private File fileCropUri ;
+    private Uri imageUri;
+    private Uri cropImageUri;
+    private String imgUrl;
+    private String cropImgUrl;
+    private String itemImgUrl;
+    private String itemCropImgUrl;
 
     /**
      * RecyclerView相关
@@ -107,7 +119,6 @@ public class AddVarietyActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mDataMaker = new AddVatietyDataMaker(mContext);
         mLoadingDialog = new LoadingDialog(AddVarietyActivity.this, "数据加载中...", false);
-        addProduct = new Product();
     }
 
     @Override
@@ -162,14 +173,14 @@ public class AddVarietyActivity extends BaseActivity {
             @Override
             public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
                 BaseViewHolder holder = ((BaseViewHolder) viewHolder);
-                holder.setTextColor(R.id.tv, Color.BLUE);
+                holder.setTextColor(R.id.tv_name, Color.BLUE);
             }
 
             @Override
             public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
                 ToastUtil.showShortToast("View reset: " + pos);
                 BaseViewHolder holder = ((BaseViewHolder) viewHolder);
-                holder.setTextColor(R.id.tv, Color.RED);
+                holder.setTextColor(R.id.tv_name, Color.RED);
             }
 
             @Override
@@ -185,6 +196,7 @@ public class AddVarietyActivity extends BaseActivity {
         };
 
         mAdapter = new AddVarietyDragAdapter(mData);
+        mAdapter.setListener(AddVarietyActivity.this);
         mItemDragAndSwipeCallback = new ItemDragAndSwipeCallback(mAdapter);
         mItemTouchHelper = new ItemTouchHelper(mItemDragAndSwipeCallback);
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
@@ -266,11 +278,13 @@ public class AddVarietyActivity extends BaseActivity {
                             @Override
                             public void clickRightButton(NormalAlertDialog dialog, View view) {
                                 mLoadingDialog.show();
+                                addProduct = new Product();
                                 addProduct.setProductname(etName.getText().toString().trim());
                                 addProduct.setPrice(etPrice.getText().toString().trim());
                                 addProduct.setRemake(etRemake.getText().toString().trim());
                                 addProduct.setCreatedate(DateTimeUtils.getCurrentDateTime());
-                                addProduct.setImgurl(fileUrl);
+                                addProduct.setCreateday(DateTimeUtils.getCurrentDateTimeYMD());
+                                addProduct.setImgurl(cropImgUrl);
                                 mDataMaker.addVatietyPrduct(addProduct);
                                 dialog.dismiss();
                                 new Handler().postDelayed(new Runnable() {
@@ -280,7 +294,7 @@ public class AddVarietyActivity extends BaseActivity {
                                             etName.setText("");
                                             etPrice.setText("");
                                             etRemake.setText("");
-                                            ivImg.setImageResource(R.mipmap.ic_launcher);
+                                            ivImg.setImageResource(R.mipmap.default_photo);
                                             mLoadingDialog.cancelDialog();
                                             ToastUtil.showShortToast("产品添加成功");
                                         }
@@ -312,7 +326,17 @@ public class AddVarietyActivity extends BaseActivity {
                                         performCodeWithPermission("拍照需要您提供浏览存储的权限", new PermissionCallback() {
                                             @Override
                                             public void hasPermission() {
-                                                fileUrl = PhotoUtils.takePhoto(AddVarietyActivity.this,OPEN_CAMERA);
+                                                String[] str = PhotoUtils.getPhotoPath();
+                                                imgUrl = str[0];
+                                                cropImgUrl = str[1];
+                                                fileUri = new File(imgUrl);
+                                                fileCropUri = new File(cropImgUrl);
+                                                imageUri = Uri.fromFile(fileUri);
+                                                //通过FileProvider创建一个content类型的Uri
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                                    imageUri = FileProvider.getUriForFile(AddVarietyActivity.this, "com.example.a99351.cgnoodlenote.fileprovider", fileUri);
+                                                }
+                                                PhotoUtils.takePicture(AddVarietyActivity.this, imageUri, OPEN_CAMERA);
                                             }
 
                                             @Override
@@ -325,7 +349,7 @@ public class AddVarietyActivity extends BaseActivity {
                                         performCodeWithPermission("打开相册需要您提供浏览存储的权限", new PermissionCallback() {
                                             @Override
                                             public void hasPermission() {
-                                                PhotoUtils.openPhotoAlbum(AddVarietyActivity.this,OPEN_ALBUM);
+                                                PhotoUtils.openPic(AddVarietyActivity.this, OPEN_ALBUM);
                                             }
 
                                             @Override
@@ -345,29 +369,104 @@ public class AddVarietyActivity extends BaseActivity {
                 break;
         }
     }
+    private static final int OUTPUT_X = 480;
+    private static final int OUTPUT_Y = 480;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
-            case OPEN_CAMERA:  // /storage/emulated/0/ws/mapp/ws123456/comment/camera_1512889107084.jpg
-                if (resultCode == RESULT_OK){  //  /www/ws/myapp/ws123456/comment/1512902382384.jpg
-                    if (data ==null||fileUrl.contains("www_path")){
-                        fileUrl = fileUrl.replace("www_path","storage/emulated/0");
+        if (resultCode ==RESULT_OK){
+            switch (requestCode){
+                case OPEN_CAMERA:
+                    cropImageUri = Uri.fromFile(fileCropUri);
+                    PhotoUtils.cropImageUri(this, imageUri, cropImageUri, 1, 1, OUTPUT_X, OUTPUT_Y, CODE_RESULT_REQUEST);
+                    break;
+                case OPEN_ALBUM:
+                    cropImgUrl = PhotoUtils.getPhotoPath()[1];
+                    fileCropUri = new File(cropImgUrl);
+                    cropImageUri = Uri.fromFile(fileCropUri);
+                    Uri newUri = Uri.parse(PhotoUtils.getPath(this, data.getData()));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        newUri = FileProvider.getUriForFile(this, "com.example.a99351.cgnoodlenote.fileprovider", new File(newUri.getPath()));
                     }
-                    addProduct .setImgurl(fileUrl);
-                    File imgFile = new File(fileUrl);
-                    Log.i("ws log","存在："+imgFile.exists());
-                    Glide.with(mContext).load(imgFile).error(R.mipmap.ic_launcher).into(ivImg);
-                }else{
-                    fileUrl = "";
-                }
-                break;
-            case OPEN_ALBUM:
-                if (data !=null){
+                    PhotoUtils.cropImageUri(this, newUri, cropImageUri, 1, 1, OUTPUT_X, OUTPUT_Y, CODE_RESULT_REQUEST);
+                    break;
+                case CODE_RESULT_REQUEST:
+                    Bitmap bitmap = PhotoUtils.getBitmapFromUri(cropImageUri, this);
+                    if (bitmap != null) {
+                        ivImg.setImageBitmap(bitmap);
+                    }
+                    break;
+                case ITEM_OPEN_CAMERA:
+                    cropImageUri = Uri.fromFile(fileCropUri);
+                    PhotoUtils.cropImageUri(this, imageUri, cropImageUri, 1, 1, OUTPUT_X, OUTPUT_Y, ITEM_CODE_RESULT_REQUEST);
+                    break;
 
-                }
-                break;
+                case ITEM_OPEN_ALBUM:
+                    cropImgUrl = PhotoUtils.getPhotoPath()[1];
+                    fileCropUri = new File(cropImgUrl);
+                    cropImageUri = Uri.fromFile(fileCropUri);
+                    Uri itemnewUri = Uri.parse(PhotoUtils.getPath(this, data.getData()));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        itemnewUri = FileProvider.getUriForFile(this, "com.example.a99351.cgnoodlenote.fileprovider", new File(itemnewUri.getPath()));
+                    }
+                    PhotoUtils.cropImageUri(this, itemnewUri, cropImageUri, 1, 1, OUTPUT_X, OUTPUT_Y, ITEM_CODE_RESULT_REQUEST);
+                    break;
+                case ITEM_CODE_RESULT_REQUEST:
+                    itemProduct.setImgurl(cropImgUrl);
+                    mDataMaker.savePrductImgUrl(itemProduct);
+                   initData();
+                    break;
+            }
+        }else{
+            cropImgUrl = "";
+            imgUrl = "";
         }
+
+    }
+
+    private Product itemProduct;
+    @Override
+    public void imgClick(Product item) {
+        itemProduct = item;
+        List<String> headData = new ArrayList<>();
+        headData.add("相机");
+        headData.add("相册");
+        NormalSelectionDialog chaHeaddialog = new NormalSelectionDialog.Builder(AddVarietyActivity.this)
+                .setItemHeight(45)
+                .setItemTextColor(R.color.blue)
+                .setItemTextSize(14)
+                .setItemWidth(0.7f)
+                .setCancleButtonText("取消")
+                .setOnItemListener(new DialogInterface.OnItemClickListener<NormalSelectionDialog>() {
+                    @Override
+                    public void onItemClick(NormalSelectionDialog dialog, View button, int position) {
+                        switch (position) {
+                            case 0:
+                                String[] str = PhotoUtils.getPhotoPath();
+                                imgUrl = str[0];
+                                cropImgUrl = str[1];
+                                fileUri = new File(imgUrl);
+                                fileCropUri = new File(cropImgUrl);
+                                imageUri = Uri.fromFile(fileUri);
+                                //通过FileProvider创建一个content类型的Uri
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    imageUri = FileProvider.getUriForFile(AddVarietyActivity.this, "com.example.a99351.cgnoodlenote.fileprovider", fileUri);
+                                }
+                                PhotoUtils.takePicture(AddVarietyActivity.this, imageUri, ITEM_OPEN_CAMERA);
+                                dialog.dismiss();
+                                break;
+                            case 1:
+                                PhotoUtils.openPic(AddVarietyActivity.this, ITEM_OPEN_ALBUM);
+                                dialog.dismiss();
+                                break;
+                        }
+
+                    }
+                }).setTouchOutside(true)
+                .build();
+
+        chaHeaddialog.setData(headData);
+        chaHeaddialog.show();
     }
 }

@@ -3,6 +3,7 @@ package com.example.a99351.cgnoodlenote.ui.addvariety;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -23,12 +24,31 @@ public class AddVarietyDragAdapter extends BaseItemDraggableAdapter<Product, Bas
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, Product item) {
+    protected void convert(BaseViewHolder helper, final Product item) {
         helper.setText(R.id.tv_first_letter,item.getProductname().substring(0,1));
         helper.setText(R.id.tv_product_name,item.getProductname());
         helper.setText(R.id.tv_product_remake,item.getRemake());
         if (!TextUtils.isEmpty(item.getImgurl())){
             Glide.with(mContext).load(new File(item.getImgurl())).error(R.mipmap.ic_launcher).into((ImageView) helper.getView(R.id.iv_img));
+        }else{
+            ((ImageView) helper.getView(R.id.iv_img)).setImageResource(R.mipmap.ic_launcher_dog);
         }
+        helper.getView(R.id.iv_img).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imgClick.imgClick(item);
+            }
+        });
     }
+
+
+    public interface  setImgClick{
+        void imgClick(Product item);
+    }
+    private setImgClick imgClick;
+
+    public void setListener(setImgClick imgClick){
+        this.imgClick =imgClick;
+    }
+
 }
