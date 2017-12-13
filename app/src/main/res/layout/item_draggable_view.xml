@@ -42,7 +42,6 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_marginTop="10dp"
-            android:text="allencoder2013@gmail.com"
             android:textColor="@color/yellow"
             />
     </LinearLayout>

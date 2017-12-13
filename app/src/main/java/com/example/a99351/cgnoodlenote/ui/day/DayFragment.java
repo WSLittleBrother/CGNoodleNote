@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -42,7 +41,7 @@ import java.util.List;
  * Created by 99351 on 2017/10/28.
  */
 
-public class DayFragment extends BaseFragment<DayPresenter> implements DayContract.View{
+public class DayFragment extends BaseFragment<DayPresenter> implements DayContract.View,NormalSelectPaymentDialog.DialogCallBack{
     private static DayFragment instance;
     private RecyclerView mRecyclerView;
     private List<DayCharge> mData;
@@ -87,7 +86,7 @@ public class DayFragment extends BaseFragment<DayPresenter> implements DayContra
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                mPresenter.getChoosedProduct(mContext,products);
+                mPresenter.getChoosedProduct(mContext,mData);
             }
         });
 
@@ -169,8 +168,7 @@ public class DayFragment extends BaseFragment<DayPresenter> implements DayContra
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                showPopFormBottom(view);
-                ToastUtil.showShortToast("点击了" + position);
+                showPopFormBottom(mData.get(position));
             }
         });
 
@@ -213,9 +211,20 @@ public class DayFragment extends BaseFragment<DayPresenter> implements DayContra
         }
     }
 
-    public void showPopFormBottom(View view) {
+    public void showPopFormBottom(DayCharge item) {
         NormalSelectPaymentDialog dialog = new NormalSelectPaymentDialog(new NormalSelectionDialog.Builder(mContext));
+        dialog.setListener(this);
+        dialog.setData(item);
         dialog.show();
     }
 
+    @Override
+    public void dialogCallBack() {
+        initData();
+        initTopData();
+    }
+
+    private void initTopData() {
+
+    }
 }

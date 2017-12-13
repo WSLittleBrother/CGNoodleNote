@@ -32,22 +32,15 @@ public class DataMaker {
         return products;
     }
 
-    public static List<DayCharge> getDayCharge(Context mContext,String today,String productid){
+    public static void updateDayCharge(Context mContext,DayCharge dayCharge){
         DBHelper dbhelper = null;
-        List<DayCharge> dayCharges = null;
         try {
             dbhelper = new DBHelper(mContext, DBHelperType.BUS_DBHELPER);
-            Dao<DayCharge, Integer> userDao = dbhelper.getDayChargeDao();
-            dayCharges = userDao.queryBuilder()
-            .where()
-            .eq("createdate",today)
-            .and()
-            .eq("productid",productid).query();
-
+            Dao<DayCharge, Integer> dayChargeDao = dbhelper.getDayChargeDao();
+            dayChargeDao.createOrUpdate(dayCharge);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return dayCharges;
     }
 
     /**
@@ -91,9 +84,9 @@ public class DataMaker {
                     for (Product product : products){
                         DayCharge dayCharge = dayChargeDao.queryBuilder()
                                 .where()
-                                .eq("createdate",product.getCreateday())
+                                .eq("createdate",DateTimeUtils.getCurrentDateTimeYMD())
                                 .and()
-                                .eq("id",product.getId())
+                                .eq("productid",product.getId())
                                 .queryForFirst();
 
                         if (dayCharge == null){

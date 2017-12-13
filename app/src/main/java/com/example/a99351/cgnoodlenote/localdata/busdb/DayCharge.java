@@ -12,20 +12,34 @@ public class DayCharge {
     private int id;
     @DatabaseField
     private int productid;
-    @DatabaseField
+    @DatabaseField(defaultValue = "")
     private String createdate;
-    @DatabaseField
+    @DatabaseField(defaultValue = "")
     private String productname;
-    @DatabaseField
+    @DatabaseField(defaultValue = "0")
     private String productweight;
-    @DatabaseField
+    @DatabaseField(defaultValue = "0")
     private String productprice;
-    @DatabaseField
+    @DatabaseField(defaultValue = "")
     private String productunit;
-    @DatabaseField
+    @DatabaseField(defaultValue = "0")
     private String productsumprice;
-    @DatabaseField
+    @DatabaseField(defaultValue = "")
     private String productimg;
+    @DatabaseField(defaultValue = "暂无")
+    private String remake;
+
+    public DayCharge() {
+
+    }
+
+    public String getRemake() {
+        return remake;
+    }
+
+    public void setRemake(String remake) {
+        this.remake = remake;
+    }
 
     public int getId() {
         return id;

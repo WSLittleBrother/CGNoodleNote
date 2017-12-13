@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.a99351.cgnoodlenote.base.BasePresenter;
 import com.example.a99351.cgnoodlenote.base.BaseView;
+import com.example.a99351.cgnoodlenote.localdata.busdb.DayCharge;
 import com.example.a99351.cgnoodlenote.localdata.busdb.Product;
 
 import java.util.List;
@@ -21,6 +22,6 @@ public interface DayContract {
 
     abstract class Presenter extends BasePresenter<View>{
 
-       public abstract void getChoosedProduct(Context context,List<Product> products);
+       public abstract void getChoosedProduct(Context context,List<DayCharge> dayCharges);
     }
 }

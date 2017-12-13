@@ -29,6 +29,6 @@ public class DayDragAdapter extends BaseItemDraggableAdapter<DayCharge, BaseView
             ((ImageView) helper.getView(R.id.iv_photo)).setImageResource(R.mipmap.ic_launcher_dog);
         }
         helper.setText(R.id.tv_name, item.getProductname());
-        helper.setText(R.id.tv_info, item.getCreatedate());
+        helper.setText(R.id.tv_info, "总金额："+Integer.parseInt(item.getProductprice())*Integer.parseInt(item.getProductweight())+"："+"数量："+item.getProductweight()+item.getProductunit()+"\n备注："+item.getRemake());
     }
 }

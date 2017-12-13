@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.example.a99351.cgnoodlenote.R;
 import com.example.a99351.cgnoodlenote.localdata.DataMaker;
+import com.example.a99351.cgnoodlenote.localdata.busdb.DayCharge;
 import com.example.a99351.cgnoodlenote.localdata.busdb.Product;
 import com.example.a99351.cgnoodlenote.ui.day.contract.DayContract;
 
@@ -27,16 +28,28 @@ public class DayPresenter extends DayContract.Presenter {
     /**
      *
      * @param context   上下文对象
-     * @param products  这里传过来的是已经呈现出来的商品列表
+     * @param dayCharges  这里传过来的是已经呈现出来的商品列表
      * @return
      */
     @Override
-    public void getChoosedProduct(Context context, List<Product> products) {
+    public void getChoosedProduct(Context context, List<DayCharge> dayCharges) {
         //总的产品列表
         List<Product> sumProductList = DataMaker.getProductList(mContext);
         //
         final List<Product> needProductList =new ArrayList<>();
         final List<Product> showProductList =DataMaker.getProductList(mContext);
+        for (DayCharge dayCharge:dayCharges){
+            for (int i=0;i<sumProductList.size();i++){
+                if (dayCharge.getProductid()==sumProductList.get(i).getId()){
+                    int productid = sumProductList.get(i).getId();
+                    for (int j=0;j<showProductList.size();j++){
+                        if (showProductList.get(j).getId()==productid){
+                            showProductList.remove(j);
+                        }
+                    }
+                }
+            }
+        }
 
         final List<Boolean> checkedList = new ArrayList<>();
         //这里只不过是为了给checked列表进行初始化值，全部设置为false

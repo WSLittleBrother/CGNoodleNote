@@ -19,8 +19,8 @@
             android:layout_alignParentBottom="true"
             />
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_centerHorizontal="true"
             android:id="@+id/iv_img"
+            android:layout_centerHorizontal="true"
             android:layout_width="@dimen/dp_60"
             android:layout_height="@dimen/dp_60"
             android:layout_gravity="center_horizontal"
@@ -64,6 +64,7 @@
                 />
 
             <EditText
+                android:id="@+id/et_input_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_5"
@@ -83,6 +84,7 @@
                 />
 
             <EditText
+                android:id="@+id/et_input_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_5"
@@ -109,6 +111,7 @@
                 />
 
             <EditText
+                android:id="@+id/et_input_unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_5"
@@ -126,14 +129,14 @@
                 />
 
             <EditText
+                android:id="@+id/et_input_remake"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_5"
                 android:background="@drawable/shape_stroke_black"
                 android:textSize="@dimen/font_small"
                 android:hint="请输入备注"
-                android:minEms="7"
-                android:id="@+id/editText" />
+                android:minEms="7"/>
         </LinearLayout>
         <TextView
             android:id="@+id/tv_positive"
@@ -144,5 +147,4 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-
 </LinearLayout>

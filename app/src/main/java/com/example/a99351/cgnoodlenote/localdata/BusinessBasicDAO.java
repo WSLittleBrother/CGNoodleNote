@@ -22,7 +22,7 @@ public class BusinessBasicDAO extends OrmLiteSqliteOpenHelper {
 	public static String BUSDATABASE_NAME = "project.db";
 	private String DATABASE_PATH = AppConstant.APP_SDCARD_PATH + UserModel.getUser().getUsername() + "/" + BUSDATABASE_NAME;
 
-	private static final int DATABASE_VERSION = 5;
+	private static final int DATABASE_VERSION = 1;
 
 	private void initDtaBasePath(Context context) {
 		if (!SDCardUtils.isSDCardEnable()) {
@@ -77,18 +77,7 @@ public class BusinessBasicDAO extends OrmLiteSqliteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, ConnectionSource connSource, int oldVersion, int newVersion) {
 		if (oldVersion != newVersion) {
 			try {
-				if (oldVersion <2){
-					String sql = "ALTER TABLE Product ADD COLUMN remake text";
-					db.execSQL(sql);
-				}
-				if (oldVersion < 3) {
-					String sql1 = "ALTER TABLE Product ADD COLUMN imgurl text";
-					db.execSQL(sql1);
-				}
-				if (oldVersion < 4) {
-					String sql1 = "ALTER TABLE Product ADD COLUMN createday text";
-					db.execSQL(sql1);
-				}
+
 				db.setVersion(newVersion);
 			}catch (Exception e){
 			e.printStackTrace();}
